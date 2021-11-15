@@ -109,4 +109,3 @@ int main(){
 	checkWin(a);
 }
 }
-
