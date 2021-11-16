@@ -9,37 +9,37 @@ using namespace std;
 // Chua tao bot, chua luu thong tin nguoi choi
 int checkWin(char a[23][45])
 {
-	for(int i=0; i<23; i++){
-		for(int j=0; j<45; j++){
-			if(a[i][j]==a[i+2][j] && a[i+2][j]==a[i+4][j] && a[i+4][j]==a[i+6][j] && a[i+6][j]=='X')
+	for(int i=0; i<10; i++){
+		for(int j=0; j<10; j++){
+			if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+2][j*4+6]==a[i*2+3+4][j*4+6] && a[i*2+3+4][j*4+6]==a[i*2+3+6][j*4+6] && a[i*2+3+6][j*4+6]=='X')
 			{
 				return 1;
 				break;
-			}else if(a[i][j]==a[i+2][j] && a[i+2][j]==a[i+4][j] && a[i+4][j]==a[i+6][j] && a[i+6][j]=='O')
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+2][j*4+6]==a[i*2+3+4][j*4+6] && a[i*2+3+4][j*4+6]==a[i*2+3+6][j*4+6] && a[i*2+3+6][j*4+6]=='O')
 			{
 				return 2;
 				break;	
-			}else if(a[i][j]==a[i][j+4] && a[i][j+4]==a[i][j+8] && a[i][j+8]==a[i][j+12] && a[i][j+12]=='X')
+			}else if(a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+4]==a[i*2+3][j*4+6+8] && a[i*2+3][j*4+6+8]==a[i*2+3][j*4+6+12] && a[i*2+3][j*4+6+12]=='X')
 			{
 				return 1;
 				break;
-			}else if(a[i][j]==a[i][j+4] && a[i][j+4]==a[i][j+8] && a[i][j+8]==a[i][j+12] && a[i][j+12]=='O')
+			}else if(a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+4]==a[i*2+3][j*4+6+8] && a[i*2+3][j*4+6+8]==a[i*2+3][j*4+6+12] && a[i*2+3][j*4+6+12]=='O')
 			{
 				return 2;
 				break;
-			}else if(a[i][j]==a[i+2][j+4] && a[i+2][j+4]==a[i+4][j+8] && a[i+4][j+8]==a[i+6][j+12] && a[i+6][j+12]=='X')
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+2][j*4+6+4]==a[i*2+3+4][j*4+6+8] && a[i*2+3+4][j*4+6+8]==a[i*2+3+6][j*4+6+12] && a[i*2+3+6][j*4+6+12]=='X')
 			{
 				return 1;
 				break;
-			}else if(a[i][j]==a[i+2][j+4] && a[i+2][j+4]==a[i+4][j+8] && a[i+4][j+8]==a[i+6][j+12] && a[i+6][j+12]=='O')
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+2][j*4+6+4]==a[i*2+3+4][j*4+6+8] && a[i*2+3+4][j*4+6+8]==a[i*2+3+6][j*4+6+12] && a[i*2+3+6][j*4+6+12]=='O')
 			{
 				return 2;
 				break;
-			}else if(a[i][j]==a[i+2][j-4] && a[i+2][j-4]==a[i+4][j-8] && a[i+4][j-8]==a[i+6][j-12] && a[i+6][j-12]=='X')
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+2][j*4+6-4]==a[i*2+3+4][j*4+6-8] && a[i*2+3+4][j*4+6-8]==a[i*2+3+6][j*4+6-12] && a[i*2+3+6][j*4+6-12]=='X')
 			{
 				return 1;
 				break;
-			}else if(a[i][j]==a[i+2][j-4] && a[i+2][j-4]==a[i+4][j-8] && a[i+4][j-8]==a[i+6][j-12] && a[i+6][j-12]=='O')
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+2][j*4+6-4]==a[i*2+3+4][j*4+6-8] && a[i*2+3+4][j*4+6-8]==a[i*2+3+6][j*4+6-12] && a[i*2+3+6][j*4+6-12]=='O')
 			{
 				return 2;
 				break;
@@ -50,17 +50,21 @@ int checkWin(char a[23][45])
 bool Full(char a[23][45])
 {
 	int dem=0;
-	for(int i=0; i<23; i++)
+	for(int i=0; i<10; i++)
 	{
-		for(int j=0; j<45; j++)
+		for(int j=0; j<10; j++)
 		{
-			if ((a[i][j]=='X') || (a[i][j]=='O'))
+			if ((a[i*2+3][j*4+6]=='X') || (a[i*2+3][j*4+6]=='O'))
 			dem++;
 		}
 	}
-	if(dem==100) 	
+	if(dem==100)
+	{
 		return true;
+	}else
+	{
 		return false;
+	}
 }
 void board(char a[23][45], int x=0, int y=0)
 {
@@ -133,8 +137,10 @@ void player1(char a[23][45],int m,int n,int row1[50],int col1[50],int count1)
 	system("cls");
 	row1[count1]=n*2+3;
 	col1[count1]=m*4+6;
-	for(int i=0; i<23; i++){
-		for(int j=0; j<45; j++){
+	for(int i=0; i<23; i++)
+	{
+		for(int j=0; j<45; j++)
+		{
 			a[n*2+3][m*4+6] = 'X';
 			cout << a[i][j];
 		}
@@ -160,8 +166,10 @@ void player2(char a[23][45],int m,int n,int row2[50],int col2[50],int count2)
 	system("cls");
 	row2[count2]=n*2+3;
 	col2[count2]=m*4+6;
-	for(int i=0; i<23; i++){
-		for(int j=0; j<45; j++){
+	for(int i=0; i<23; i++)
+	{
+		for(int j=0; j<45; j++)
+		{
 			a[n*2+3][m*4+6] = 'O';
 			cout << a[i][j];
 		}
@@ -172,11 +180,13 @@ void replay(char a[23][45],int row1[50],int col1[50],int count1,int row2[50],int
 {
 	int c1=0;
 	int c2=0;
-	while(c1<count1 || c2<count2){
+	while(c1<count1 || c2<count2)
+	{
 		system("cls");
 		a[row1[c1]][col1[c1]]='X';
 		for(int i=0; i<23; i++){
-    		for(int j=0; j<45; j++){
+    		for(int j=0; j<45; j++)
+			{
     	    	cout << a[i][j];
 			}
 			cout << endl;
@@ -190,8 +200,10 @@ void replay(char a[23][45],int row1[50],int col1[50],int count1,int row2[50],int
 	    }
 		system("cls");	
 		a[row2[c2]][col2[c2]]='O';
-		for(int i=0; i<23; i++){
-    		for(int j=0; j<45; j++){
+		for(int i=0; i<23; i++)
+		{
+    		for(int j=0; j<45; j++)
+			{
     	    	cout << a[i][j];
 			}
 			cout << endl;
@@ -267,7 +279,10 @@ int main(){
 	    			break;	
 				}
 			case 5:
-				
+				cout<< "Players take turns entering point coordinates (Row,Column)" <<endl;
+				cout<< "Do not enter the coordinates entered! Otherwise you will have to re-entered"<<endl;
+				cout<< "Winning condition: when a player has 4 moves in a row horizontally, vertically or diagonally, he wins" <<endl;
+				break;
     		case 6:
 		    	break;
 		    default:
