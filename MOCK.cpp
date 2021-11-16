@@ -7,34 +7,35 @@ using namespace std;
 // Chua tao bot, chua tao chuc nang xem lai, chua luu thong tin nguoi choi
 void checkWin(char a[23][45]){
 	for(int i=0; i<23; i++){
-		for(int j=0; j<45; j++)
-		{	//doc
-			if(a[i][j]==a[i+2][j] && a[i+2][j]==a[i+4][j] && a[i+4][j]==a[i+6][j] && a[i+6][j]==a[i+8][j] &&  a[i+8][j]=='X'){
+		for(int j=0; j<45; j++){
+			if(a[i][j]==a[i+2][j] && a[i+2][j]==a[i+4][j] && a[i+4][j]==a[i+6][j] && a[i+6][j]=='X'){
 				cout << "Player 1 win !" << endl;
 				break;
-			}else if(a[i][j]==a[i+2][j] && a[i+2][j]==a[i+4][j] && a[i+4][j]==a[i+6][j] && a[i+6][j]==a[i+8][j] && a[i+8][j]=='O'){
+			}else if(a[i][j]==a[i+2][j] && a[i+2][j]==a[i+4][j] && a[i+4][j]==a[i+6][j] && a[i+6][j]=='O'){
+				cout << "Player 2 win !" << endl;
+				break;	
+			}else if(a[i][j]==a[i][j+4] && a[i][j+4]==a[i][j+8] && a[i][j+8]==a[i][j+12] && a[i][j+12]=='X'){
+				cout << "Player 1 win !" << endl;
+				break;
+			}else if(a[i][j]==a[i][j+4] && a[i][j+4]==a[i][j+8] && a[i][j+8]==a[i][j+12] && a[i][j+12]=='O'){
 				cout << "Player 2 win !" << endl;
 				break;
-			//ngang		
-			}else if(a[i][j]==a[i][j+4] && a[i][j+4]==a[i][j+8] && a[i][j+8]==a[i][j+12] && a[i][j+12]==a[i][j+16] && a[i][j+16]=='X'){
+			}else if(a[i][j]==a[i+2][j+4] && a[i+2][j+4]==a[i+4][j+8] && a[i+4][j+8]==a[i+6][j+12] && a[i+6][j+12]=='X'){
 				cout << "Player 1 win !" << endl;
 				break;
-			}else if(a[i][j]==a[i][j+4] && a[i][j+4]==a[i][j+8] && a[i][j+8]==a[i][j+12] && a[i][j+12]==a[i][j+16] && a[i][j+16]=='O'){
+			}else if(a[i][j]==a[i+2][j+4] && a[i+2][j+4]==a[i+4][j+8] && a[i+4][j+8]==a[i+6][j+12] && a[i+6][j+12]=='O'){
 				cout << "Player 2 win !" << endl;
 				break;
-			}
-			//cheo
-			else if(a[i][j]==a[i+2][j+4] && a[i+2][j+4]==a[i+4][j+8] && a[i+4][j+8]==a[i+6][j+12] && a[i+6][j+12]==a[i+8][j+16] && a[i+8][j+16]=='X'){
+			}else if(a[i][j]==a[i+2][j-4] && a[i+2][j-4]==a[i+4][j-8] && a[i+4][j-8]==a[i+6][j-12] && a[i+6][j-12]=='X'){
 				cout << "Player 1 win !" << endl;
 				break;
-			}else if(a[i][j]==a[i+2][j+4] && a[i+2][j+4]==a[i+4][j+8] && a[i+4][j+8]==a[i+6][j+12] && a[i+6][j+12]==a[i+8][j+16] && a[i+8][j+16]=='O'){
+			}else if(a[i][j]==a[i+2][j-4] && a[i+2][j-4]==a[i+4][j-8] && a[i+4][j-8]==a[i+6][j-12] && a[i+6][j-12]=='O'){
 				cout << "Player 2 win !" << endl;
 				break;
 			}
 		}
 	}
 }
-
 void BanCo(char a[23][45], int x=0, int y=0)
 {
 	for(int i=0; i<23; i++)
@@ -122,14 +123,28 @@ void player2(char a[23][45],int m,int n)
 }
 int main(){
 	char a[23][45];
-	int m,n,c,r;
+	int m,n,c,r,number;
 	int x=0;
 	int y=0;
-	BanCo(a,x,y);
-	while(1){
-	player1(a,m,n);
-	checkWin(a);
-	player2(a,m,n);
-	checkWin(a);
-}
+	cout << "*-------MAIN MENU-------*" << endl;
+	cout << "1.Play with Other Player" << endl;
+	cout << "2.Play with Bot" << endl;
+	cout << "3.Replay" << endl;
+	cout << "4.Player Information" << endl;
+	cout << "5.Guide" << endl;
+	cout << "6.Exit" << endl;
+	cout << "Press number to choice: ";
+	cin >> number;
+	switch(number){
+		case 1:{
+			BanCo(a,x,y);
+			while(1){
+            	player1(a,m,n);
+            	checkWin(a);
+            	player2(a,m,n);
+             	checkWin(a);
+            }
+			break;
+		}
+	}
 }
