@@ -34,78 +34,102 @@ void checkWin(char a[23][45]){
 		}
 	}
 }
-int main(){
-	char a[23][45];
-	int m,n,c,r;
-	int x=0;
-	int y=0;
-	for(int i=0; i<23; i++){
-		for(int j=0; j<45; j++){
+
+void BanCo(char a[23][45], int x=0, int y=0)
+{
+	for(int i=0; i<23; i++)
+	{
+		for(int j=0; j<45; j++)
+		{
 			a[i][j] = ' ';
 		}
 	}
-	for(int i=1; i<2; i++){
-		for(int j=6; j<43; j++){
+	for(int i=1; i<2; i++)
+	{
+		for(int j=6; j<43; j++)
+		{
 			a[i][j] = '0'+x;
 			j += 3;
 			x ++;
 		}
 	}
-	for(int i=3; i<22; i++){
-		for(int j=2; j<3; j++){
+	for(int i=3; i<22; i++)
+	{
+		for(int j=2; j<3; j++)
+		{
 			a[i][j] = '0'+y;
 		}
 		i += 1;
 		y ++;
 	}
-	for(int i=2; i<23; i++){
-		for(int j=4; j<45; j++){
+	for(int i=2; i<23; i++)
+	{
+		for(int j=4; j<45; j++)
+		{
 			a[i][j] = '|';
 			j += 3;
 		}
 	}
-	for(int i=2; i<23; i++){
-		for(int j=4; j<45; j++){
+	for(int i=2; i<23; i++)
+	{
+		for(int j=4; j<45; j++)
+		{
 			if(j%4!=0) a[i][j] = '-';
 		}
 		i += 1;
 	}
-	for(int i=0; i<23; i++){
-		for(int j=0; j<45; j++){
+	for(int i=0; i<23; i++)
+	{
+		for(int j=0; j<45; j++)
+		{
 			cout << a[i][j];
 		}
 		cout << endl;
 	}
-	while(1){
+}
+void player1(char a[23][45],int m,int n)
+{
 	cout << "Player 1's turn: " << endl;
-	cout << "Column: ";
-	cin >> m;
 	cout << "Row: ";
 	cin >> n;
+	cout << "Colomn: ";
+	cin >> m;
+	system("cls");
 	for(int i=0; i<23; i++){
 		for(int j=0; j<45; j++){
-			c = m*4+6;
-			r = n*2+3;
-			a[r][c] = 'X';
+			a[n*2+3][m*4+6] = 'X';
 			cout << a[i][j];
 		}
 		cout << endl;
 	}
-	checkWin(a);
+	
+}
+void player2(char a[23][45],int m,int n)
+{
 	cout << "Player 2's turn: " << endl;
-	cout << "Column: ";
-	cin >> m;
 	cout << "Row: ";
 	cin >> n;
+	cout << "Colomn: ";
+	cin >> m;
+	system("cls");
 	for(int i=0; i<23; i++){
 		for(int j=0; j<45; j++){
-			c = m*4+6;
-			r = n*2+3;
-			a[r][c] = 'O';
+			a[n*2+3][m*4+6] = 'O';
 			cout << a[i][j];
 		}
 		cout << endl;
 	}
+}
+int main(){
+	char a[23][45];
+	int m,n,c,r;
+	int x=0;
+	int y=0;
+	BanCo(a,x,y);
+	while(1){
+	player1(a,m,n);
+	checkWin(a);
+	player2(a,m,n);
 	checkWin(a);
 }
 }
