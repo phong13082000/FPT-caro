@@ -1,4 +1,5 @@
 #include<iostream>
+#include <windows.h>
 using namespace std;
 // Cho phep nguoi dung nhap cac buoc di chuyen bang dong lenh
 // Hien thi trang thai hien tai cua board
@@ -60,7 +61,7 @@ bool Full(char a[23][45])
 		return true;
 		return false;
 }
-void BanCo(char a[23][45], int x=0, int y=0)
+void board(char a[23][45], int x=0, int y=0)
 {
 	for(int i=0; i<23; i++)
 	{
@@ -112,7 +113,7 @@ void BanCo(char a[23][45], int x=0, int y=0)
 		cout << endl;
 	}
 }
-void player1(char a[23][45],int m,int n)
+void player1(char a[23][45],int m,int n,int row1[50],int col1[50],int count1)
 {
 	cout << "Player 1's turn: " << endl;
 	cout << "Row: ";
@@ -122,13 +123,15 @@ void player1(char a[23][45],int m,int n)
 	while(m<0 || n<0 || a[n*2+3][m*4+6]=='X' || a[n*2+3][m*4+6]=='O' || m>9 || n>9)
 	{
 		//kiem tra o nhap co hop le hay khong
-		cout<<"Nhap lai o can danh"<<endl;
+		cout<<"Re-enter !"<<endl;
 		cout << "Row: ";
 		cin >> n;
 		cout << "Column: ";
 		cin >> m;
 	}
 	system("cls");
+	row1[count1]=n*2+3;
+	col1[count1]=m*4+6;
 	for(int i=0; i<23; i++){
 		for(int j=0; j<45; j++){
 			a[n*2+3][m*4+6] = 'X';
@@ -136,9 +139,8 @@ void player1(char a[23][45],int m,int n)
 		}
 		cout << endl;
 	}
-	
 }
-void player2(char a[23][45],int m,int n)
+void player2(char a[23][45],int m,int n,int row2[50],int col2[50],int count2)
 {
 	cout << "Player 2's turn: " << endl;
 	cout << "Row: ";
@@ -155,6 +157,8 @@ void player2(char a[23][45],int m,int n)
 		cin >> m;
 	}
 	system("cls");
+	row2[count2]=n*2+3;
+	col2[count2]=m*4+6;
 	for(int i=0; i<23; i++){
 		for(int j=0; j<45; j++){
 			a[n*2+3][m*4+6] = 'O';
@@ -163,9 +167,43 @@ void player2(char a[23][45],int m,int n)
 		cout << endl;
 	}
 }
+void replay(char a[23][45],int row1[50],int col1[50],int count1,int row2[50],int col2[50],int count2)
+{
+	int c1=0;
+	int c2=0;
+	while(c1<count1 || c2<count2){
+		system("cls");
+		for(int i=0; i<23; i++){
+    		for(int j=0; j<45; j++){
+     			a[row1[c1]][col1[c1]]='X';
+    	    	cout << a[i][j];
+			}
+			cout << endl;
+		}
+		c1++;
+		Sleep(1000);
+		system("cls");	
+		for(int i=0; i<23; i++){
+    		for(int j=0; j<45; j++){
+     			a[row2[c2]][col2[c2]]='O';
+    	    	cout << a[i][j];
+			}
+			cout << endl;
+		}
+		c2++;
+		Sleep(1000);
+	}
+	for(int i=0; i<23; i++){
+   		for(int j=0; j<45; j++){
+        	cout << a[i][j];
+		}
+		cout << endl;
+	}
+}
 int main(){
 	char a[23][45];
 	int row1[50],row2[50],col1[50],col2[50];
+	int count1,count2;
 	int m,n,number;
 	char kt;
 	int x=0;
@@ -181,19 +219,22 @@ int main(){
     	cout << "6.Exit" << endl;
     	cout << "Press number to choice: ";
     	cin >> number;
-    	int r1=0,c1=0,r2=0,c2=0;
 	    switch(number)
 		{
 	    	case 1:
-	    		BanCo(a,x,y);
+	    		board(a,x,y);
+	    		count1=0;
+	    		count2=0;
 		    	while(1){
-                	player1(a,m,n);
+                	player1(a,m,n,row1,col1,count1);
+                	count1++;
                 	if(checkWin(a)==1)
 					{
                 		cout << "Player 1 win !" << endl;
                 		break;
 	    			}
-                	player2(a,m,n);
+                	player2(a,m,n,row2,col2,count2);
+                	count2++;
                 	if(checkWin(a)==2)
 					{
                 		cout << "Player 2 win !" << endl;
@@ -208,14 +249,8 @@ int main(){
     			break;
     		
     		case 3:
-    		    for(int i=0; i<23; i++)
-				{
-		            for(int j=0; j<45; j++)
-					{
-		             	cout << a[i][j];
-	               	}
-               		cout << endl;
-               	}
+    			board(a,x,y);
+    			replay(a,row1,col1,count1,row2,col2,count2);
 	    		break;
 	   		
     		case 6:
@@ -226,4 +261,3 @@ int main(){
     	cin >> kt;
     }while(kt!='Y' && kt!='y');
 }
-//update như này k đúng à ???
