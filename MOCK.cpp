@@ -5,32 +5,32 @@ using namespace std;
 // Kiem tra tinh trang win va bao cao ket qua
 // Tiep tuc cho den khi 2 nguoi choi thang ( chua lam dieu kien hoa )
 // Chua tao bot, chua tao chuc nang xem lai, chua luu thong tin nguoi choi
-void checkWin(char a[23][45]){
+int checkWin(char a[23][45]){
 	for(int i=0; i<23; i++){
 		for(int j=0; j<45; j++){
 			if(a[i][j]==a[i+2][j] && a[i+2][j]==a[i+4][j] && a[i+4][j]==a[i+6][j] && a[i+6][j]=='X'){
-				cout << "Player 1 win !" << endl;
+				return 1;
 				break;
 			}else if(a[i][j]==a[i+2][j] && a[i+2][j]==a[i+4][j] && a[i+4][j]==a[i+6][j] && a[i+6][j]=='O'){
-				cout << "Player 2 win !" << endl;
+				return 2;
 				break;	
 			}else if(a[i][j]==a[i][j+4] && a[i][j+4]==a[i][j+8] && a[i][j+8]==a[i][j+12] && a[i][j+12]=='X'){
-				cout << "Player 1 win !" << endl;
+				return 1;
 				break;
 			}else if(a[i][j]==a[i][j+4] && a[i][j+4]==a[i][j+8] && a[i][j+8]==a[i][j+12] && a[i][j+12]=='O'){
-				cout << "Player 2 win !" << endl;
+				return 2;
 				break;
 			}else if(a[i][j]==a[i+2][j+4] && a[i+2][j+4]==a[i+4][j+8] && a[i+4][j+8]==a[i+6][j+12] && a[i+6][j+12]=='X'){
-				cout << "Player 1 win !" << endl;
+				return 1;
 				break;
 			}else if(a[i][j]==a[i+2][j+4] && a[i+2][j+4]==a[i+4][j+8] && a[i+4][j+8]==a[i+6][j+12] && a[i+6][j+12]=='O'){
-				cout << "Player 2 win !" << endl;
+				return 2;
 				break;
 			}else if(a[i][j]==a[i+2][j-4] && a[i+2][j-4]==a[i+4][j-8] && a[i+4][j-8]==a[i+6][j-12] && a[i+6][j-12]=='X'){
-				cout << "Player 1 win !" << endl;
+				return 1;
 				break;
 			}else if(a[i][j]==a[i+2][j-4] && a[i+2][j-4]==a[i+4][j-8] && a[i+4][j-8]==a[i+6][j-12] && a[i+6][j-12]=='O'){
-				cout << "Player 2 win !" << endl;
+				return 2;
 				break;
 			}
 		}
@@ -124,27 +124,41 @@ void player2(char a[23][45],int m,int n)
 int main(){
 	char a[23][45];
 	int m,n,number;
+	char kt;
 	int x=0;
 	int y=0;
-	cout << "*-------MAIN MENU-------*" << endl;
-	cout << "1.Play with Other Player" << endl;
-	cout << "2.Play with Bot" << endl;
-	cout << "3.Replay" << endl;
-	cout << "4.Player Information" << endl;
-	cout << "5.Guide" << endl;
-	cout << "6.Exit" << endl;
-	cout << "Press number to choice: ";
-	cin >> number;
-	switch(number){
-		case 1:{
-			BanCo(a,x,y);
-			while(1){
-            	player1(a,m,n);
-            	checkWin(a);
-            	player2(a,m,n);
-             	checkWin(a);
-            }
-			break;
-		}
-	}
+	do{
+    	cout << "*-------MAIN MENU-------*" << endl;
+    	cout << "1.Play with Other Player" << endl;
+    	cout << "2.Play with Bot" << endl;
+    	cout << "3.Replay" << endl;
+    	cout << "4.Player Information" << endl;
+    	cout << "5.Guide" << endl;
+    	cout << "6.Exit" << endl;
+    	cout << "Press number to choice: ";
+    	cin >> number;
+	    switch(number){
+	    	case 1:{
+	    		BanCo(a,x,y);
+		    	while(1){
+                	player1(a,m,n);
+                	if(checkWin(a)==1){
+                		cout << "Player 1 win !" << endl;
+                		break;
+	    			}
+                	player2(a,m,n);
+                	if(checkWin(a)==2){
+                		cout << "Player 2 win !" << endl;
+                		break;
+    				}
+                }
+    			break;
+    		}
+    		case 6:{
+		    	break;
+	    	}
+    	}
+    	cout << "CONTINUE ? (Y/N): ";    
+    	cin >> kt;
+    }while(kt!='N' && kt!='n');
 }
