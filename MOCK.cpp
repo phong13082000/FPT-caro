@@ -36,6 +36,20 @@ int checkWin(char a[23][45]){
 		}
 	}
 }
+bool Full(char a[23][45])
+{
+	int dem=0;
+	for(int i=0; i<23; i++){
+		for(int j=0; j<45; j++)
+		{
+			if ((a[i][j]=='X') || (a[i][j]=='O'))
+			dem++;
+		}
+	}
+	if(dem==100) 	
+		return true;
+		return false;
+}
 void BanCo(char a[23][45], int x=0, int y=0)
 {
 	for(int i=0; i<23; i++)
@@ -151,6 +165,8 @@ int main(){
                 		cout << "Player 2 win !" << endl;
                 		break;
     				}
+			if(Full(a))
+				cout <<"Draw!" <<endl;
                 }
     			break;
     		}
