@@ -150,7 +150,7 @@ void player2(char a[23][45],int m,int n,int row2[50],int col2[50],int count2)
 	while(m<0 || n<0 || a[n*2+3][m*4+6]=='X' || a[n*2+3][m*4+6]=='O' || m>9 || n>9)
 	{
 		//kiem tra o nhap co hop le hay khong
-		cout<<"Nhap lai o can danh"<<endl;
+		cout<<"Re-enter !"<<endl;
 		cout << "Row: ";
 		cin >> n;
 		cout << "Column: ";
@@ -173,31 +173,35 @@ void replay(char a[23][45],int row1[50],int col1[50],int count1,int row2[50],int
 	int c2=0;
 	while(c1<count1 || c2<count2){
 		system("cls");
+		a[row1[c1]][col1[c1]]='X';
 		for(int i=0; i<23; i++){
     		for(int j=0; j<45; j++){
-     			a[row1[c1]][col1[c1]]='X';
     	    	cout << a[i][j];
 			}
 			cout << endl;
 		}
 		c1++;
 		Sleep(1000);
+		if(checkWin(a)==1)
+		{
+            cout << "Player 1 win !" << endl;
+            break;
+	    }
 		system("cls");	
+		a[row2[c2]][col2[c2]]='O';
 		for(int i=0; i<23; i++){
     		for(int j=0; j<45; j++){
-     			a[row2[c2]][col2[c2]]='O';
     	    	cout << a[i][j];
 			}
 			cout << endl;
 		}
 		c2++;
 		Sleep(1000);
-	}
-	for(int i=0; i<23; i++){
-   		for(int j=0; j<45; j++){
-        	cout << a[i][j];
-		}
-		cout << endl;
+	    if(checkWin(a)==2)
+		{
+           	cout << "Player 2 win !" << endl;
+            break;
+    	}
 	}
 }
 int main(){
@@ -249,15 +253,45 @@ int main(){
     			break;
     		
     		case 3:
-    			board(a,x,y);
-    			replay(a,row1,col1,count1,row2,col2,count2);
-	    		break;
-	   		
+    			if(count1==0)
+				{
+					board(a,x,y);
+					cout<< "You haven't played yet! " <<endl;
+					break;
+				}else
+				{
+					board(a,x,y);
+					Sleep(1000);
+    				replay(a,row1,col1,count1,row2,col2,count2);
+	    			break;	
+				}
+			case 5:
+				
     		case 6:
 		    	break;
+		    default:
+		    	cout <<"Number to choice is false! Choose again: "<<endl;
+		    	Sleep(1000);
+		    	continue;
 	    	
     	}
-    	cout << "EXIT ? (Y/N): ";    
-    	cin >> kt;
-    }while(kt!='Y' && kt!='y');
+    	if(number==6)
+		{
+    		cout << "EXIT ? (Y/N): ";    
+    		cin >> kt;
+    		if(kt=='Y' || kt=='y') break;
+		}else
+		{
+			cout << "CONTINUE ? (Y/N): ";    
+    		cin >> kt;
+    		if(kt=='Y' || kt=='y') 
+    		{
+    			continue;
+			}else if(kt=='N' || kt=='n')
+			{
+				break;
+			}
+		}
+    	
+    }while(1);
 }
