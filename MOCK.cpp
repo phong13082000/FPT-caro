@@ -226,3 +226,4 @@ int main(){
     	cin >> kt;
     }while(kt!='Y' && kt!='y');
 }
+//update như này k đúng à ???
