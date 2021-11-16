@@ -239,6 +239,7 @@ int main(){
 	    switch(number)
 		{
 	    	case 1:
+	    		cout << "=> Player 1 = X, Player 2 = O" << endl;
 	    		board(a,x,y);
 	    		count1=0;
 	    		count2=0;
@@ -278,13 +279,29 @@ int main(){
     				replay(a,row1,col1,count1,row2,col2,count2);
 	    			break;	
 				}
+				
 			case 5:
 				cout<< "Players take turns entering point coordinates (Row,Column)" <<endl;
 				cout<< "Do not enter the coordinates entered! Otherwise you will have to re-entered"<<endl;
 				cout<< "Winning condition: when a player has 4 moves in a row horizontally, vertically or diagonally, he wins" <<endl;
 				break;
+				
+    		case 2:
+    			cout << endl << "*-------Play with BOT-------*" << endl;
+            	cout << "1.Easy Mode" << endl;
+            	cout << "2.Normal Mode" << endl;
+            	cout << "3.Hard Mode" << endl;
+            	cout << "4.Back to MAIN MENU" << endl;
+            	cout << "Press number to choice: ";
+            	cin >> number;
+        	    switch(number){
+        	    	case 4:
+        	    		break;
+				}
+				
     		case 6:
 		    	break;
+		    	
 		    default:
 		    	cout <<"Number to choice is false! Choose again: "<<endl;
 		    	Sleep(1000);
