@@ -4,8 +4,9 @@ using namespace std;
 // Cho phep nguoi dung nhap cac buoc di chuyen bang dong lenh
 // Hien thi trang thai hien tai cua board
 // Kiem tra tinh trang win va bao cao ket qua
-// Tiep tuc cho den khi 2 nguoi choi thang ( chua lam dieu kien hoa )
-// Chua tao bot, chua tao chuc nang xem lai, chua luu thong tin nguoi choi
+// Tiep tuc cho den khi 2 nguoi choi thang va hoa
+// Da co chuc nang replay
+// Chua tao bot, chua luu thong tin nguoi choi
 int checkWin(char a[23][45])
 {
 	for(int i=0; i<23; i++){
