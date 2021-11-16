@@ -36,20 +36,6 @@ int checkWin(char a[23][45]){
 		}
 	}
 }
-bool Full(char a[23][45])
-{
-	int dem=0;
-	for(int i=0; i<23; i++){
-		for(int j=0; j<45; j++)
-		{
-			if ((a[i][j]=='X') || (a[i][j]=='O'))
-			dem++;
-		}
-	}
-	if(dem==100) 	
-		return true;
-		return false;
-}
 void BanCo(char a[23][45], int x=0, int y=0)
 {
 	for(int i=0; i<23; i++)
@@ -107,7 +93,7 @@ void player1(char a[23][45],int m,int n)
 	cout << "Player 1's turn: " << endl;
 	cout << "Row: ";
 	cin >> n;
-	cout << "Colomn: ";
+	cout << "Column: ";
 	cin >> m;
 	system("cls");
 	for(int i=0; i<23; i++){
@@ -124,7 +110,7 @@ void player2(char a[23][45],int m,int n)
 	cout << "Player 2's turn: " << endl;
 	cout << "Row: ";
 	cin >> n;
-	cout << "Colomn: ";
+	cout << "Column: ";
 	cin >> m;
 	system("cls");
 	for(int i=0; i<23; i++){
@@ -137,11 +123,13 @@ void player2(char a[23][45],int m,int n)
 }
 int main(){
 	char a[23][45];
+	int row1[50],row2[50],col1[50],col2[50];
 	int m,n,number;
 	char kt;
 	int x=0;
 	int y=0;
 	do{
+		system("cls");
     	cout << "*-------MAIN MENU-------*" << endl;
     	cout << "1.Play with Other Player" << endl;
     	cout << "2.Play with Bot" << endl;
@@ -151,6 +139,7 @@ int main(){
     	cout << "6.Exit" << endl;
     	cout << "Press number to choice: ";
     	cin >> number;
+    	int r1=0,c1=0,r2=0,c2=0;
 	    switch(number){
 	    	case 1:{
 	    		BanCo(a,x,y);
@@ -165,16 +154,23 @@ int main(){
                 		cout << "Player 2 win !" << endl;
                 		break;
     				}
-			if(Full(a))
-				cout <<"Draw!" <<endl;
                 }
     			break;
     		}
+    		case 3:{
+    		    for(int i=0; i<23; i++){
+		            for(int j=0; j<45; j++){
+		             	cout << a[i][j];
+	               	}
+               		cout << endl;
+               	}
+	    		break;
+	   		}
     		case 6:{
 		    	break;
 	    	}
     	}
-    	cout << "CONTINUE ? (Y/N): ";    
+    	cout << "EXIT ? (Y/N): ";    
     	cin >> kt;
-    }while(kt!='N' && kt!='n');
+    }while(kt!='Y' && kt!='y');
 }
