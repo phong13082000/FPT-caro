@@ -109,6 +109,14 @@ void player1(char a[23][45],int m,int n)
 	cin >> n;
 	cout << "Colomn: ";
 	cin >> m;
+	while(m<0 || n<0 || a[n*2+3][m*4+6]=='X' || a[n*2+3][m*4+6]=='O' || m>23 || n>45)
+	{
+		cout<<"Nhap lai o can danh"<<endl;
+		cout << "Row: ";
+		cin >> n;
+		cout << "Colomn: ";
+		cin >> m;
+	}
 	system("cls");
 	for(int i=0; i<23; i++){
 		for(int j=0; j<45; j++){
@@ -126,6 +134,14 @@ void player2(char a[23][45],int m,int n)
 	cin >> n;
 	cout << "Colomn: ";
 	cin >> m;
+	while(m<0 || n<0 || a[n*2+3][m*4+6]=='X' || a[n*2+3][m*4+6]=='O' || m>23 || n>45)
+	{
+		cout<<"Nhap lai o can danh"<<endl;
+		cout << "Row: ";
+		cin >> n;
+		cout << "Colomn: ";
+		cin >> m;
+	}
 	system("cls");
 	for(int i=0; i<23; i++){
 		for(int j=0; j<45; j++){
