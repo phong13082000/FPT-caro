@@ -123,7 +123,7 @@ void player2(char a[23][45],int m,int n)
 }
 int main(){
 	char a[23][45];
-	int m,n,c,r,number;
+	int m,n,number;
 	int x=0;
 	int y=0;
 	cout << "*-------MAIN MENU-------*" << endl;
