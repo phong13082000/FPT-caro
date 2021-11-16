@@ -117,15 +117,15 @@ void player1(char a[23][45],int m,int n)
 	cout << "Player 1's turn: " << endl;
 	cout << "Row: ";
 	cin >> n;
-	cout << "Colomn: ";
+	cout << "Column: ";
 	cin >> m;
-	while(m<0 || n<0 || a[n*2+3][m*4+6]=='X' || a[n*2+3][m*4+6]=='O' || m>23 || n>45)
+	while(m<0 || n<0 || a[n*2+3][m*4+6]=='X' || a[n*2+3][m*4+6]=='O' || m>9 || n>9)
 	{
 		//kiem tra o nhap co hop le hay khong
 		cout<<"Nhap lai o can danh"<<endl;
 		cout << "Row: ";
 		cin >> n;
-		cout << "Colomn: ";
+		cout << "Column: ";
 		cin >> m;
 	}
 	system("cls");
@@ -143,15 +143,15 @@ void player2(char a[23][45],int m,int n)
 	cout << "Player 2's turn: " << endl;
 	cout << "Row: ";
 	cin >> n;
-	cout << "Colomn: ";
+	cout << "Column: ";
 	cin >> m;
-	while(m<0 || n<0 || a[n*2+3][m*4+6]=='X' || a[n*2+3][m*4+6]=='O' || m>23 || n>45)
+	while(m<0 || n<0 || a[n*2+3][m*4+6]=='X' || a[n*2+3][m*4+6]=='O' || m>9 || n>9)
 	{
 		//kiem tra o nhap co hop le hay khong
 		cout<<"Nhap lai o can danh"<<endl;
 		cout << "Row: ";
 		cin >> n;
-		cout << "Colomn: ";
+		cout << "Column: ";
 		cin >> m;
 	}
 	system("cls");
