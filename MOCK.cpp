@@ -215,6 +215,11 @@ void replay(char a[23][45],int row1[50],int col1[50],int count1,int row2[50],int
            	cout << "Player 2 win !" << endl;
             break;
     	}
+    	if(Full(a))
+		{
+    		cout <<"Draw!" <<endl;
+    		break;
+		}
 	}
 }
 int main(){
