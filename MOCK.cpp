@@ -300,6 +300,7 @@ void replay(char a[23][45],int row1[50],int col1[50],int count1,int row2[50],int
 int main(){
 	char a[23][45];
 	int row1[50],row2[50],col1[50],col2[50];
+	int win1=0,win2=0,draw=0;
 	int count1,count2;
 	int m,n,number;
 	char kt;
@@ -407,8 +408,31 @@ int main(){
 	                	}
 	        	    		
 				}
-				
-    		case 6:
+		
+		case 4:
+    			if(checkWin(a)==1)
+				{
+    				win1++;
+				}
+				else if(checkWin(a)==2)
+				{
+					win2++;
+				}
+				else
+				{
+					draw++;
+				}
+				cout<<"---------------Player 1's information---------------"<<endl;
+				cout<<"Player 1's number of wins: "<<win1<<endl;
+				cout<<"Player 1's number of losses: "<<win2<<endl;
+				cout<<"Player 1's number of draws: "<<draw<<endl;
+				cout<<"---------------Player 2's information---------------"<<endl;
+				cout<<"Player 2's number of wins: "<<win2<<endl;
+				cout<<"Player 2's number of losses: "<<win1<<endl;
+				cout<<"Player 2's number of draws: "<<draw<<endl;
+				break;
+    		
+		case 6:
 		    	break;
 		    	
 		    default:
@@ -436,4 +460,16 @@ int main(){
 		}
     	
     }while(1);
+ofstream Player ("Player.txt");
+Player<<"Player's information";
+Player<<"---------------Player 1's information---------------"<<endl;
+Player<<"Player 1's number of wins: "<<win1<<endl;
+Player<<"Player 1's number of losses: "<<win2<<endl;
+Player<<"Player 1's number of draws: "<<draw<<endl;
+Player<<"---------------Player 2's information---------------"<<endl;
+Player<<"Player 2's number of wins: "<<win2<<endl;
+Player<<"Player 2's number of losses: "<<win1<<endl;
+Player<<"Player 2's number of draws: "<<draw<<endl;
+Player.close();
+return 0;
 }
