@@ -14,35 +14,35 @@ int checkWin(char a[23][45])
 		for(int j=0; j<10; j++){
 			if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+2][j*4+6]==a[i*2+3+4][j*4+6] && a[i*2+3+4][j*4+6]==a[i*2+3+6][j*4+6] && a[i*2+3+6][j*4+6]=='X')
 			{
-				return 1;
+				return 10;
 				break;
 			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+2][j*4+6]==a[i*2+3+4][j*4+6] && a[i*2+3+4][j*4+6]==a[i*2+3+6][j*4+6] && a[i*2+3+6][j*4+6]=='O')
 			{
-				return 2;
+				return -10;
 				break;	
 			}else if(a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+4]==a[i*2+3][j*4+6+8] && a[i*2+3][j*4+6+8]==a[i*2+3][j*4+6+12] && a[i*2+3][j*4+6+12]=='X')
 			{
-				return 1;
+				return 10;
 				break;
 			}else if(a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+4]==a[i*2+3][j*4+6+8] && a[i*2+3][j*4+6+8]==a[i*2+3][j*4+6+12] && a[i*2+3][j*4+6+12]=='O')
 			{
-				return 2;
+				return -10;
 				break;
 			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+2][j*4+6+4]==a[i*2+3+4][j*4+6+8] && a[i*2+3+4][j*4+6+8]==a[i*2+3+6][j*4+6+12] && a[i*2+3+6][j*4+6+12]=='X')
 			{
-				return 1;
+				return 10;
 				break;
 			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+2][j*4+6+4]==a[i*2+3+4][j*4+6+8] && a[i*2+3+4][j*4+6+8]==a[i*2+3+6][j*4+6+12] && a[i*2+3+6][j*4+6+12]=='O')
 			{
-				return 2;
+				return -10;
 				break;
 			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+2][j*4+6-4]==a[i*2+3+4][j*4+6-8] && a[i*2+3+4][j*4+6-8]==a[i*2+3+6][j*4+6-12] && a[i*2+3+6][j*4+6-12]=='X')
 			{
-				return 1;
+				return 10;
 				break;
 			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+2][j*4+6-4]==a[i*2+3+4][j*4+6-8] && a[i*2+3+4][j*4+6-8]==a[i*2+3+6][j*4+6-12] && a[i*2+3+6][j*4+6-12]=='O')
 			{
-				return 2;
+				return -10;
 				break;
 			}
 		}
@@ -181,8 +181,9 @@ void player2(char a[23][45],int m,int n,int row2[50],int col2[50],int count2)
 
 int minimax(char a[23][45], int depth, bool isMaximizing )
 {
-	if(checkWin(a)==2) return 10- depth;
-	if(checkWin(a)==1) return -10+ depth;
+	int score = checkWin(a);
+	if(score == 10) return score;
+	if (score == -10) return score;
 	if(Full(a)) return 0;
 	
 	if(isMaximizing)
@@ -192,9 +193,9 @@ int minimax(char a[23][45], int depth, bool isMaximizing )
 		{
 			for(int j=0; j<10; j++)
 			{
-				if ((a[i*2+3][j*4+6]=='X') || (a[i*2+3][j*4+6]=='O'));
+				if (a[i*2+3][j*4+6]==' ');
 				{
-					a[i*2+3][j*4+6]='O';
+					a[i*2+3][j*4+6]='X';
 					int r = minimax(a,depth +1 ,false);
 					a[i*2+3][j*4+6]=' ';
 					if(r>bestScore)
@@ -212,7 +213,7 @@ int minimax(char a[23][45], int depth, bool isMaximizing )
 		{
 			for(int j=0; j<10; j++)
 			{
-				if ((a[i*2+3][j*4+6]=='X') || (a[i*2+3][j*4+6]=='O'));
+				if (a[i*2+3][j*4+6]==' ');
 				{
 					a[i*2+3][j*4+6]='O';
 					int r = minimax(a,depth +1 ,true);
@@ -228,29 +229,38 @@ int minimax(char a[23][45], int depth, bool isMaximizing )
 	}
 	
 }
-void bot(char a[23][45],int m, int n, int row2[50],int col2[50],int count2)
+void bot(char a[23][45],int m, int n, int row1[50],int col1[50],int count1)
 {
 	cout << "Bot's turn: " << endl;
-	int bestScore=100000;
+	int bestScore=-100000;
 	for(int i=0; i<10; i++)
 	{
 		for(int j=0; j<10; j++)
 		{
-			if ((a[i*2+3][j*4+6]!='X') || (a[i*2+3][j*4+6]!='O'))
+			if (a[i*2+3][j*4+6]==' ')
 			{
-				a[i*2+3][j*4+6]='O';
-				int r = minimax(a,0,true);
+				a[i*2+3][j*4+6]='X';
+				int r = minimax(a,0,false);
 				a[i*2+3][j*4+6]=' ';
-				if(r<bestScore)
+				if(r>bestScore)
 				{
 					bestScore=r;
-					n=i;
-					m=j;
+					n=i; 
+					m=j; 
 				}
 			}
 		}
 	}
-	a[n*2+3][m*4+6]='O';	
+	a[n*2+3][m*4+6]='X';
+	system("cls");
+	for(int i=0; i<23; i++)
+	{
+		for(int j=0; j<45; j++)
+		{
+			cout << a[i][j];
+		}
+		cout << endl;
+	}	
 }
 void replay(char a[23][45],int row1[50],int col1[50],int count1,int row2[50],int col2[50],int count2)
 {
@@ -328,14 +338,14 @@ int main(){
 		    	while(1){
                 	player1(a,m,n,row1,col1,count1);
                 	count1++;
-                	if(checkWin(a)==1)
+                	if(checkWin(a)==10)
 					{
                 		cout << "Player 1 win !" << endl;
                 		break;
 	    			}
                 	player2(a,m,n,row2,col2,count2);
                 	count2++;
-                	if(checkWin(a)==2)
+                	if(checkWin(a)==-10)
 					{
                 		cout << "Player 2 win !" << endl;
                 		break;
@@ -386,19 +396,18 @@ int main(){
 	    				count2=0;
         	    		while(1)
 						{
-		                	player1(a,m,n,row1,col1,count1);
+		                	bot(a,m,n,row1,col1,count1);
 		                	count1++;
-		                	if(checkWin(a)==1)
-							{
-		                		cout << "Player 1 win !" << endl;
-		                		break;
-			    			}
-		                	bot(a,m,n,row2,col2,count2);
-		                	board(a,x,y);
-		                	count2++;
-		                	if(checkWin(a)==2)
+		                	if(checkWin(a)==10)
 							{
 		                		cout << "Bot win !" << endl;
+		                		break;
+			    			}
+		                	player2(a,m,n,row2,col2,count2);
+		                	count2++;
+		                	if(checkWin(a)==-10)
+							{
+		                		cout << "Player win !" << endl;
 		                		break;
 		    				}
 		    				if(Full(a))
@@ -407,6 +416,7 @@ int main(){
 		    					break;
 							}
 	                	}
+	                	break;
 	        	    		
 				}
 		
