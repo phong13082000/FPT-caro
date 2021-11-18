@@ -1,4 +1,5 @@
 #include<iostream>
+#include <fstream>
 #include <windows.h>
 using namespace std;
 // Cho phep nguoi dung nhap cac buoc di chuyen bang dong lenh
@@ -460,16 +461,16 @@ int main(){
 		}
     	
     }while(1);
-ofstream Player ("Player.txt");
-Player<<"Player's information";
-Player<<"---------------Player 1's information---------------"<<endl;
-Player<<"Player 1's number of wins: "<<win1<<endl;
-Player<<"Player 1's number of losses: "<<win2<<endl;
-Player<<"Player 1's number of draws: "<<draw<<endl;
-Player<<"---------------Player 2's information---------------"<<endl;
-Player<<"Player 2's number of wins: "<<win2<<endl;
-Player<<"Player 2's number of losses: "<<win1<<endl;
-Player<<"Player 2's number of draws: "<<draw<<endl;
-Player.close();
-return 0;
+	ofstream Player ("Player.txt");
+	Player<<"Player's information";
+	Player<<"---------------Player 1's information---------------"<<endl;
+	Player<<"Player 1's number of wins: "<<win1<<endl;
+	Player<<"Player 1's number of losses: "<<win2<<endl;
+	Player<<"Player 1's number of draws: "<<draw<<endl;
+	Player<<"---------------Player 2's information---------------"<<endl;
+	Player<<"Player 2's number of wins: "<<win2<<endl;
+	Player<<"Player 2's number of losses: "<<win1<<endl;
+	Player<<"Player 2's number of draws: "<<draw<<endl;
+	Player.close();
+	return 0;
 }
