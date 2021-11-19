@@ -8,6 +8,87 @@ using namespace std;
 // Tiep tuc cho den khi 2 nguoi choi thang va hoa
 // Da co chuc nang replay
 // Chua tao bot, chua luu thong tin nguoi choi
+class Player
+{
+public:
+	string name;
+	int win=0,lose=0,draw=0;
+
+	Player()
+	{
+		
+	}
+	
+	int setWin(int w)
+	{
+		this->win=w;
+	}
+	
+	int setDraw(int d)
+	{
+		this->draw=d;
+	}
+	
+	void Input()
+	{
+		cout<<"Name: ";
+		cin>>this->name;
+	}
+	
+	void Output()
+	{
+		cout<<"------------Player's Information------------"<<endl;
+		cout<<"Name: "<<this->name<<endl;
+		cout<<"Wins: "<<this->win<<endl;
+		cout<<"Losses: "<<this->lose<<endl;
+		cout<<"Draws: "<<this->draw<<endl;
+	}
+	
+	string getName()
+	{
+		return this->name;
+	}
+	
+	int getWin()
+	{
+		return this->win;
+	}
+	
+	int getLose()
+	{
+		return this->lose;
+	}
+	
+	int getDraw()
+	{
+		return this->draw;
+	}
+};
+
+void writeinfile(Player p)
+{
+	ofstream player;
+	player.open("Player.txt",ios::out|ios::app);
+	player<<"---------------Player's information---------------"<<endl;
+	player<<"Name: "<<p.getName()<<endl;
+	player<<"Wins: "<<p.getWin()<<endl;
+	player<<"Losses: "<<p.getLose()<<endl;
+	player<<"Draws: "<<p.getDraw()<<endl;
+}
+
+void showAllRecords()
+{
+    ifstream readFile;
+    readFile.open("Player.txt");
+    char charsInLine[1024];
+    cout<<"----------Player's records---------- "<<endl;
+    while(!readFile.eof()){
+        readFile.getline(charsInLine,1024);
+        cout<<charsInLine<<endl;
+    }
+    readFile.close();
+}
+
 int checkWin(char a[23][45])
 {
 	for(int i=0; i<10; i++){
@@ -309,9 +390,9 @@ void replay(char a[23][45],int row1[50],int col1[50],int count1,int row2[50],int
 	}
 }
 int main(){
+	Player p1,p2;
 	char a[23][45];
 	int row1[50],row2[50],col1[50],col2[50];
-	int win1=0,win2=0,draw=0;
 	int count1,count2;
 	int m,n,number;
 	char kt;
@@ -331,6 +412,8 @@ int main(){
 	    switch(number)
 		{
 	    	case 1:
+			p1.Input();
+			p2.Input();
 	    		cout << "=> Player 1 = X, Player 2 = O" << endl;
 	    		board(a,x,y);
 	    		count1=0;
@@ -423,24 +506,21 @@ int main(){
 		case 4:
     			if(checkWin(a)==1)
 				{
-    				win1++;
+    				p1.win++;
+    				p2.lose++;
 				}
 				else if(checkWin(a)==2)
 				{
-					win2++;
+					p2.win++;
+					p1.lose++;
 				}
 				else
 				{
-					draw++;
+					p1.draw++;
+					p2.draw++;
 				}
-				cout<<"---------------Player 1's information---------------"<<endl;
-				cout<<"Player 1's number of wins: "<<win1<<endl;
-				cout<<"Player 1's number of losses: "<<win2<<endl;
-				cout<<"Player 1's number of draws: "<<draw<<endl;
-				cout<<"---------------Player 2's information---------------"<<endl;
-				cout<<"Player 2's number of wins: "<<win2<<endl;
-				cout<<"Player 2's number of losses: "<<win1<<endl;
-				cout<<"Player 2's number of draws: "<<draw<<endl;
+				p1.Output();
+				p2.Output();
 				break;
     		
 		case 6:
@@ -471,16 +551,7 @@ int main(){
 		}
     	
     }while(1);
-	ofstream Player ("Player.txt");
-	Player<<"Player's information";
-	Player<<"---------------Player 1's information---------------"<<endl;
-	Player<<"Player 1's number of wins: "<<win1<<endl;
-	Player<<"Player 1's number of losses: "<<win2<<endl;
-	Player<<"Player 1's number of draws: "<<draw<<endl;
-	Player<<"---------------Player 2's information---------------"<<endl;
-	Player<<"Player 2's number of wins: "<<win2<<endl;
-	Player<<"Player 2's number of losses: "<<win1<<endl;
-	Player<<"Player 2's number of draws: "<<draw<<endl;
-	Player.close();
-	return 0;
+    writeinfile(p1);
+    writeinfile(p2);
+    return 0;
 }
