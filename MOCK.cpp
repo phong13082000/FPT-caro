@@ -7,7 +7,7 @@ using namespace std;
 // Kiem tra tinh trang win va bao cao ket qua
 // Tiep tuc cho den khi 2 nguoi choi thang va hoa
 // Da co chuc nang replay
-// Chua tao bot, chua luu thong tin nguoi choi
+
 class Player
 {
 public:
@@ -248,90 +248,411 @@ void player2(char a[23][45],int m,int n,int row2[50],int col2[50],int count2)
 		cout << endl;
 	}
 }
-
-
-int minimax(char a[23][45], int depth, bool isMaximizing )
+struct Move
 {
-	int score = checkWin(a);
-	if(score == 10) return score;
-	if (score == -10) return score;
-	if(Full(a)) return 0;
-	
-	if(isMaximizing)
-	{
-		int bestScore=-100000;	
-		for(int i=0; i<10; i++)
-		{
-			for(int j=0; j<10; j++)
-			{
-				if (a[i*2+3][j*4+6]==' ');
-				{
-					a[i*2+3][j*4+6]='X';
-					int r = minimax(a,depth +1 ,false);
-					a[i*2+3][j*4+6]=' ';
-					if(r>bestScore)
-					{
-						bestScore=r;
-					}
-				}
+    int rw, cl;
+};
+
+bool isMovesLeft(char a[23][45])
+{
+    for (int i = 0; i<10; i++){
+    	for (int j = 0; j<10; j++){
+    		if (a[i*2+3][j*4+6]==' '){
+    			return true;
+			}else{
+				return false;
 			}
 		}
-		return bestScore;
-	}else
-	{
-		int bestScore=100000;	
-		for(int i=0; i<10; i++)
-		{
-			for(int j=0; j<10; j++)
-			{
-				if (a[i*2+3][j*4+6]==' ');
-				{
-					a[i*2+3][j*4+6]='O';
-					int r = minimax(a,depth +1 ,true);
-					a[i*2+3][j*4+6]=' ';
-					if(r<bestScore)
-					{
-						bestScore=r;
-					}
-				}
-			}
-		}
-		return bestScore;
 	}
-	
 }
-void bot(char a[23][45],int m, int n, int row1[50],int col1[50],int count1)
+
+int evaluate(char a[23][45],bool Max)
 {
-	cout << "Bot's turn: " << endl;
-	int bestScore=-100000;
-	for(int i=0; i<10; i++)
-	{
-		for(int j=0; j<10; j++)
-		{
-			if (a[i*2+3][j*4+6]==' ')
+    int vx = 0;// tinh diem van dau theo x
+    int vo = 0;// tinh diem van dau theo o
+	for(int i=0; i<10; i++){
+		for(int j=0; j<10; j++){
+			if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+2][j*4+6]==a[i*2+3+4][j*4+6] && a[i*2+3+4][j*4+6]==a[i*2+3+6][j*4+6]) // Doc
 			{
-				a[i*2+3][j*4+6]='X';
-				int r = minimax(a,0,false);
-				a[i*2+3][j*4+6]=' ';
-				if(r>bestScore)
-				{
-					bestScore=r;
-					n=i; 
-					m=j; 
+				if(a[i*2+3][j*4+6]=='X'){
+					if(10 > abs(vx)){
+						vx=1000;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(10 > abs(vo)){
+						vo=-1000;
+					}
+				}	
+			}else if(a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+4]==a[i*2+3][j*4+6+8] && a[i*2+3][j*4+6+8]==a[i*2+3][j*4+6+12]) // Ngang
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(10 > abs(vx)){
+						vx=1000;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(10 > abs(vo)){
+						vo=-1000;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+2][j*4+6+4]==a[i*2+3+4][j*4+6+8] && a[i*2+3+4][j*4+6+8]==a[i*2+3+6][j*4+6+12]) // Cheo
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(10 > abs(vx)){
+						vx=1000;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(10 > abs(vo)){
+						vo=-1000;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+2][j*4+6-4]==a[i*2+3+4][j*4+6-8] && a[i*2+3+4][j*4+6-8]==a[i*2+3+6][j*4+6-12])
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(10 > abs(vx)){
+						vx=1000;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(10 > abs(vo)){
+						vo=-1000;
+					}
+				}
+				// 3 lien 1 chan
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+2][j*4+6]==a[i*2+3+4][j*4+6] && a[i*2+3+6][j*4+6]!=' ' || a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+2][j*4+6]==a[i*2+3+4][j*4+6] && a[i*2+3-2][j*4+6]!=' ') // Doc
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(6 > abs(vx)){
+						vx=7;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(6 > abs(vo)){
+						vo=-7;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+4]==a[i*2+3][j*4+6+8] && a[i*2+3][j*4+6+12]!=' ' || a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+4]==a[i*2+3][j*4+6+8] && a[i*2+3][j*4+6-4]!=' ') // Ngang
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(6 > abs(vx)){
+						vx=7;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(6 > abs(vo)){
+						vo=-7;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+2][j*4+6+4]==a[i*2+3+4][j*4+6+8] && a[i*2+3+6][j*4+6+12]!=' ' || a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+2][j*4+6+4]==a[i*2+3+4][j*4+6+8] && a[i*2+3-2][j*4+6-4]!=' ') // Cheo
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(6 > abs(vx)){
+						vx=7;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(6 > abs(vo)){
+						vo=-7;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+2][j*4+6-4]==a[i*2+3+4][j*4+6-8] && a[i*2+3+6][j*4+6-12]!=' ' || a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+2][j*4+6-4]==a[i*2+3+4][j*4+6-8] && a[i*2+3-2][j*4+6+4]!=' ')
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(6 > abs(vx)){
+						vx=7;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(6 > abs(vo)){
+						vo=-7;
+					}
+				}
+				// 3 lien 2 ho
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+2][j*4+6]==a[i*2+3+4][j*4+6] && a[i*2+3+6][j*4+6]==' ' && a[i*2+3-2][j*4+6]==' ') // Doc
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(8 > abs(vx)){
+						vx=8;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(8 > abs(vo)){
+						vo=-8;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+4]==a[i*2+3][j*4+6+8] && a[i*2+3][j*4+6+12]==' ' && a[i*2+3][j*4+6-4]==' ') // Ngang
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(8 > abs(vx)){
+						vx=8;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(8 > abs(vo)){
+						vo=-8;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+2][j*4+6+4]==a[i*2+3+4][j*4+6+8] && a[i*2+3+6][j*4+6+12]==' ' && a[i*2+3-2][j*4+6-4]==' ') // Cheo
+			{
+				if(a[i*2+3][j*4+6]=='X'){
+					if(8 > abs(vx)){
+						vx=8;
+					}
+				}else if(a[i*2+3][j*4+6]=='O'){
+					if(8 > abs(vo)){
+						vo=-8;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+2][j*4+6-4]==a[i*2+3+4][j*4+6-8] && a[i*2+3+6][j*4+6-12]!=' ' && a[i*2+3-2][j*4+6+4]==' ')
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(8 > abs(vo)){
+						vo=-8;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(8 > abs(vx)){
+						vx=8;
+					}
+				}
+				// 2 lien 2 ho
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+4][j*4+6]==' ' && a[i*2+3-2][j*4+6]==' ') // Doc
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(4 > abs(vo)){
+						vo=-4;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(4 > abs(vx)){
+						vx=4;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+8]==' ' && a[i*2+3][j*4+6-4]==' ') // Ngang
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(4 > abs(vo)){
+						vo=-4;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(4 > abs(vx)){
+						vx=4;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+4][j*4+6+8]==' ' && a[i*2+3-2][j*4+6-4]==' ') // Cheo
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(4 > abs(vo)){
+						vo=-4;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(4 > abs(vx)){
+						vx=4;
+					}
+				} 
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+4][j*4+6-8]==' ' && a[i*2+3-2][j*4+6+4]==' ')
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(4 > abs(vo)){
+						vo=-4;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(4 > abs(vx)){
+						vx=4;
+					}
+				}
+				// 2 lien 1 chan
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3+4][j*4+6]!=' ' || a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6] && a[i*2+3-2][j*4+6]!=' ') // Doc
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(2 > abs(vo)){
+						vo=-3;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(2 > abs(vx)){
+						vx=3;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6+8]!=' ' || a[i*2+3][j*4+6]==a[i*2+3][j*4+6+4] && a[i*2+3][j*4+6-4]!=' ') // Ngang
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(2 > abs(vo)){
+						vo=-3;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(2 > abs(vx)){
+						vx=3;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3+4][j*4+6+8]!=' ' || a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6+4] && a[i*2+3-2][j*4+6-4]!=' ') // Cheo
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(2 > abs(vo)){
+						vo=-3;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(2 > abs(vx)){
+						vx=3;
+					}
+				}
+			}else if(a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3+4][j*4+6-8]!=' ' || a[i*2+3][j*4+6]==a[i*2+3+2][j*4+6-4] && a[i*2+3-2][j*4+6+4]==' ')
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(2 > abs(vo)){
+						vo=-3;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(2 > abs(vx)){
+						vx=3;
+					}
+				}
+				// con lai
+			}else
+			{
+				if(a[i*2+3][j*4+6]=='O'){
+					if(2 > abs(vo)){
+						vo=0;
+					}
+				}else if(a[i*2+3][j*4+6]=='X'){
+					if(2 > abs(vx)){
+						vx=0;
+					}
 				}
 			}
 		}
 	}
-	a[n*2+3][m*4+6]='X';
+    if(abs(vx)==abs(vo))
+    {
+        if(Max == true) return vx;
+        if(Max == false) return vo;
+    }
+    else if(abs(vx)>abs(vo))
+    {
+        return vx;
+    }
+    else if (abs(vx)<abs(vo))
+    {
+        return vo;
+    }
+    return 0;
+}
+int minimax(char a[23][45], int alpha, int beta, int depth, bool isMax)
+{
+    int score = evaluate(a,isMax);
+    if (score == 1000)
+        return score;
+    if (score == -1000)
+        return score;
+    if (isMovesLeft(a)==false)
+        return 0;
+    if (score == 8 || score == 7){
+        if(depth == 1) return score;
+    } 
+    if (depth == 3) return score;
+     if (isMax)
+    {
+        int best = -10000000;
+        for (int i = 0; i<10; i++)
+        {
+            for (int j = 0; j<10; j++)
+            {
+                if (a[i*2+3][j*4+6]==' ')
+                {
+                    a[i*2+3][j*4+6] = 'X';
+
+                    int value = minimax(a, alpha, beta, depth+1, !isMax);
+
+                    a[i*2+3][j*4+6] = ' ';
+                    best = max(value, best);
+                    alpha = max(alpha, best);
+                    if (beta <= alpha){
+                    	break;
+					}
+                }
+            }
+        }
+        return best;
+    }
+ 
+    else
+    {
+        int best = 10000000;
+ 
+        for (int i = 0; i<10; i++)
+        {
+            for (int j = 0; j<10; j++)
+            {
+
+                if (a[i*2+3][j*4+6]==' ')
+                {
+                    a[i*2+3][j*4+6] = 'O';
+ 
+                    int value = minimax(a, alpha, beta, depth+1, !isMax);
+ 
+                    a[i*2+3][j*4+6] = ' ';
+                    best = min(value, best);
+                    alpha = min(alpha, best);
+                    if (beta <= alpha){
+                    	break;
+					}
+                }
+            }
+        }
+        return best;
+    }
+}
+
+Move findBestMove(char a[23][45])
+{
+    int bestVal = -10000000;
+    Move bestMove;
+    bestMove.rw = -1;
+    bestMove.cl = -1;
+    int alpha = -10000000;
+    int beta = 10000000;
+ 
+    // Traverse all cells, evaluate minimax function for
+    // all empty cells. And return the cell with optimal
+    // value.
+    for (int i = 0; i<10; i++)
+    {
+        for (int j = 0; j<10; j++)
+        {
+            // Check if cell is empty
+            if (a[i*2+3][j*4+6]==' ')
+            {
+                // Make the move
+                a[i*2+3][j*4+6] = 'X';
+ 
+                // compute evaluation function for this
+                // move.
+                int moveVal = minimax(a, alpha, beta, 0, false);
+ 
+                // Undo the move
+                a[i*2+3][j*4+6] = ' ';
+ 
+                // If the value of the current move is
+                // more than the best value, then update
+                // best/
+                if (moveVal > bestVal)
+                {
+                    bestMove.rw = i*2+3;
+                    bestMove.cl = j*4+6;
+                    bestVal = moveVal;
+                }
+            }
+        }
+    }
+    cout << "The value of the best Move is : " << bestVal << endl;
+    return bestMove;
+}
+
+
+void bot(char a[23][45],int row1[50],int col1[50],int count1){
+	cout << "BOT's turn: " << endl;
+	Move bestMove = findBestMove(a);
+	row1[count1]=bestMove.rw;
+	col1[count1]=bestMove.cl;
 	system("cls");
 	for(int i=0; i<23; i++)
 	{
 		for(int j=0; j<45; j++)
 		{
+			a[bestMove.rw][bestMove.cl] = 'X';
 			cout << a[i][j];
 		}
 		cout << endl;
-	}	
+	}
 }
 void replay(char a[23][45],int row1[50],int col1[50],int count1,int row2[50],int col2[50],int count2)
 {
@@ -463,37 +784,36 @@ int main(){
 				{
         	    	case 4:
         	    		break;
-        	    	case 3:
-        	    		board(a,x,y);
-	    				count1=0;
-	    				count2=0;
-        	    		while(1)
-						{
-		                	bot(a,m,n,row1,col1,count1);
-		                	count1++;
-		                	if(checkWin(a)==10)
-							{
-		                		cout << "Bot win !" << endl;
-		                		break;
-			    			}
-		                	player2(a,m,n,row2,col2,count2);
+        	    	case 1:
+        	    		cout << "=>  BOT = X,Player 2 = O" << endl;
+	    	        	board(a,x,y);
+	    	        	count1=0;
+	    	        	count2=0;
+        	    		while(1){
+                        
+	    		         	bot(a,row1,col1,count1);
+                          	count1++;
+                         	if(checkWin(a)==10)
+			         		{
+                	        	cout << "BOT win !" << endl;
+                	          	break;
+    			         	}
+    			         	player2(a,m,n,row2,col2,count2);
 		                	count2++;
 		                	if(checkWin(a)==-10)
 							{
-		                		cout << "Player win !" << endl;
+		                		cout << "Player 2 win !" << endl;
 		                		break;
 		    				}
-		    				if(Full(a))
-							{
-		    					cout <<"Draw!" <<endl;
-		    					break;
-							}
-	                	}
-	                	break;
-	        	    		
+    			        	if(Full(a))
+				        	{
+    				        	cout <<"Draw!" <<endl;
+    				        	break;
+				        	}
+						}
 				}
 		
-		case 4:
+			case 4:
     			if(checkWin(a)==1)
 				{
     				p1.win++;
@@ -513,13 +833,13 @@ int main(){
 				p2.Output();
 				break;
     		
-		case 6:
-		    	break;
+			case 6:
+			    break;
 		    	
-		    default:
-		    	cout <<"Number to choice is false! Choose again: "<<endl;
-		    	Sleep(1000);
-		    	continue;
+			default:
+			   	cout <<"Number to choice is false! Choose again: "<<endl;
+			    Sleep(1000);
+			    continue;
 	    	
     	}
     	if(number==6)
