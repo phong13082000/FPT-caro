@@ -19,16 +19,6 @@ public:
 		
 	}
 	
-	int setWin(int w)
-	{
-		this->win=w;
-	}
-	
-	int setDraw(int d)
-	{
-		this->draw=d;
-	}
-	
 	void Input()
 	{
 		cout<<"Name: ";
@@ -38,30 +28,30 @@ public:
 	void Output()
 	{
 		cout<<"------------Player's Information------------"<<endl;
-		cout<<"Name: "<<this->name<<endl;
-		cout<<"Wins: "<<this->win<<endl;
-		cout<<"Losses: "<<this->lose<<endl;
-		cout<<"Draws: "<<this->draw<<endl;
+		cout<<"Name: "<<name<<endl;
+		cout<<"Wins: "<<win<<endl;
+		cout<<"Losses: "<<lose<<endl;
+		cout<<"Draws: "<<draw<<endl;
 	}
 	
 	string getName()
 	{
-		return this->name;
+		return name;
 	}
 	
 	int getWin()
 	{
-		return this->win;
+		return win;
 	}
 	
 	int getLose()
 	{
-		return this->lose;
+		return lose;
 	}
 	
 	int getDraw()
 	{
-		return this->draw;
+		return draw;
 	}
 };
 
